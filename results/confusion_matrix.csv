@@ -1,0 +1,5 @@
+Metric,Value,Description
+TP,25,True Positive - Correctly predicted as diabetes
+TN,88,True Negative - Correctly predicted as non-diabetes
+FP,13,False Positive - Incorrectly predicted as diabetes
+FN,27,False Negative - Incorrectly predicted as non-diabetes
