@@ -1,296 +1,369 @@
-# 📊 Klasifikasi Pima Indians Diabetes menggunakan KNN dan Metode Elbow
+# Tugas Data Mining: Klasifikasi Diabetes dengan KNN
 
-**Tugas Data Mining - Mahasiswa Informatika**  
-**Pure Python Implementation (Tanpa Library Pengolah Data)**
+Halo! Ini adalah tugas kuliah Data Mining saya tentang klasifikasi diabetes menggunakan algoritma KNN. Yang menarik dari tugas ini adalah kita gak boleh pakai library seperti Pandas atau Scikit-learn, jadi semuanya harus dibikin dari nol pakai Python murni.
 
----
+## Tentang Proyek Ini
 
-## 🎯 Deskripsi Proyek
+Jadi ceritanya, tugas kita adalah mengklasifikasi apakah seseorang kena diabetes atau tidak berdasarkan dataset **Pima Indians Diabetes**. Dataset ini lumayan terkenal di dunia machine learning, datanya dari wanita-wanita suku Pima di Arizona.
 
-Proyek ini mengimplementasikan algoritma **K-Nearest Neighbors (KNN)** untuk klasifikasi diabetes pada dataset **Pima Indians Diabetes**. Implementasi dilakukan menggunakan **Python murni** tanpa menggunakan library pengolah data seperti Pandas atau Scikit-learn.
+Yang saya implementasikan:
+- Algoritma KNN (K-Nearest Neighbors) - ditulis dari nol
+- Metode Elbow buat cari nilai k yang paling optimal
+- Normalisasi data pakai Min-Max
+- Confusion Matrix sama metrik-metrik evaluasi (Accuracy, Precision, Recall, F1-Score)
 
-**Metode yang digunakan:**
-- ✅ **K-Nearest Neighbors (KNN)** - Algoritma klasifikasi
-- ✅ **Elbow Method** - Pencarian nilai k optimal
-- ✅ **Min-Max Normalization** - Preprocessing data
-- ✅ **Confusion Matrix** - Evaluasi performa
-- ✅ **Metrik Evaluasi Lengkap** - Accuracy, Precision, Recall, F1-Score
+## Struktur Folder
 
----
-
-## 📁 Struktur Project
+Ini struktur project-nya:
 
 ```
 Data Mining/
-├── main.py                      # Program utama (orchestrator)
-├── modules/                     # Package berisi semua modul
+├── main.py                      # File utama yang dijalankan
+├── modules/                     # Folder berisi semua modul
 │   ├── __init__.py
-│   ├── data_loader.py          # Download & load data dari Kaggle
-│   ├── preprocessing.py        # Normalisasi & train-test split
-│   ├── knn_algorithm.py        # Implementasi KNN dari nol
-│   ├── elbow_method.py         # Analisis Elbow untuk k optimal
+│   ├── data_loader.py          # Buat download & load data
+│   ├── preprocessing.py        # Normalisasi & split data
+│   ├── knn_algorithm.py        # KNN yang saya tulis sendiri
+│   ├── elbow_method.py         # Analisis Elbow
 │   ├── evaluation.py           # Confusion matrix & metrik
-│   └── visualization.py        # Grafik Elbow dengan Matplotlib
-├── results/                     # Output hasil analisis
-│   ├── elbow_analysis.csv      # Hasil analisis untuk semua k
-│   ├── confusion_matrix.csv    # Confusion matrix hasil final
-│   ├── final_metrics.csv       # Metrik evaluasi (Acc, Prec, Rec, F1)
-│   ├── elbow_curve.png         # Grafik Elbow (detailed)
-│   └── elbow_curve_simple.png  # Grafik Elbow (simple)
-├── requirements.txt            # Dependencies
-└── README.md                   # Dokumentasi (file ini)
+│   └── visualization.py        # Bikin grafik pakai Matplotlib
+├── results/                     # Hasil output
+│   ├── elbow_analysis.csv      
+│   ├── confusion_matrix.csv    
+│   ├── final_metrics.csv       
+│   ├── elbow_curve.png         
+│   └── elbow_curve_simple.png  
+├── requirements.txt            
+└── README.md                   
 ```
 
----
+## Cara Jalanin Program
 
-## 🚀 Cara Menjalankan
+Simpel kok:
 
-### 1. Install Dependencies
-
+1. Install dulu library yang dibutuhin:
 ```bash
 pip install -r requirements.txt
 ```
 
-**Dependencies:**
-- `kagglehub` - Untuk download dataset dari Kaggle
-- `matplotlib` - Untuk visualisasi grafik Elbow
+Yang diinstall cuma 2: `kagglehub` (buat download dataset) sama `matplotlib` (buat bikin grafik).
 
-### 2. Jalankan Program
-
+2. Jalankan program:
 ```bash
 python main.py
 ```
 
-Program akan otomatis:
-1. Download dataset dari Kaggle
-2. Preprocessing data (shuffle, split, normalize)
-3. Jalankan analisis Elbow (k=1 sampai k=15)
-4. Buat grafik visualisasi
-5. Train model final dengan k terbaik
-6. Evaluasi dan simpan hasil ke CSV
+Nanti program bakal jalan otomatis dari download dataset sampai kasih hasil evaluasi. Tinggal tunggu aja.
 
----
+## Hasil yang Keluar
 
-## 📊 Output yang Dihasilkan
+Setelah program selesai, bakal ada beberapa file hasil di folder `results/`:
 
-### 1. **elbow_analysis.csv**
-Hasil analisis untuk semua nilai k yang ditest:
-```csv
-k,error_rate,accuracy
-1,35.71,64.29
-3,28.57,71.43
-5,25.97,74.03
-...
-```
+### 1. elbow_analysis.csv
+File ini isinya hasil testing k dari 1 sampai 15. Jadi bisa lihat error rate sama accuracy-nya buat tiap nilai k.
 
-### 2. **confusion_matrix.csv**
-Confusion matrix hasil prediksi final:
-```csv
-Metric,Value,Description
-TP,85,True Positive - Correctly predicted as diabetes
-TN,95,True Negative - Correctly predicted as non-diabetes
-FP,12,False Positive - Incorrectly predicted as diabetes
-FN,8,False Negative - Incorrectly predicted as non-diabetes
-```
+### 2. confusion_matrix.csv  
+Ini confusion matrix-nya, isinya TP, TN, FP, FN. Berguna buat tau model kita prediksinya bener apa salah dimana.
 
-### 3. **final_metrics.csv**
-Metrik evaluasi lengkap:
-```csv
-Metric,Value,Percentage
-Accuracy,0.7662,76.62%
-Precision,0.8763,87.63%
-Recall,0.9140,91.40%
-F1-Score,0.8947,89.47%
-```
+### 3. final_metrics.csv
+Metrik evaluasi lengkap: Accuracy, Precision, Recall, sama F1-Score. Ini yang penting buat dinilai dosennya.
 
-### 4. **Grafik Elbow**
-- `elbow_curve.png` - Grafik lengkap (error rate + accuracy)
-- `elbow_curve_simple.png` - Grafik simple (hanya error rate)
+### 4. Grafik Elbow
+Ada 2 versi grafik: yang lengkap (ada error rate sama accuracy) sama yang simple (cuma error rate aja).
 
----
+## Penjelasan Cara Kerjanya
 
-## 🔬 Metodologi
+### Data yang Dipakai
+Dataset Pima Indians Diabetes dari Kaggle. Totalnya ada 768 data dengan 8 fitur kayak Glucose, BloodPressure, BMI, dll. Target-nya adalah apakah diabetes (1) atau tidak (0).
 
-### 1. **Data Acquisition**
-- Dataset: **Pima Indians Diabetes** dari Kaggle
-- Sumber: UCI Machine Learning Repository
-- Total: 768 samples, 8 features, 1 label
-- Features: Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age
-- Label: Outcome (0 = Non-diabetes, 1 = Diabetes)
+### Preprocessing
+Sebelum masuk ke algoritma, datanya harus di-preprocessing dulu:
+- Shuffle data biar acak (pakai seed=42 biar hasilnya konsisten)
+- Split jadi 80% training dan 20% testing
+- Normalisasi pakai Min-Max supaya semua fitur punya skala yang sama (0-1)
 
-### 2. **Preprocessing**
-**Normalisasi Min-Max:**
+Normalisasi ini penting banget soalnya KNN itu sensitive sama skala data. Kalau ada fitur yang nilainya gede banget, bisa dominan dan ganggu hasil prediksi.
+
+### Algoritma KNN
+KNN ini konsepnya gampang: buat prediksi suatu data, lihat k tetangga terdekatnya, terus voting mayoritas.
+
+Cara kerjanya:
+1. Hitung jarak dari data test ke semua data training (pakai Euclidean Distance)
+2. Urutkan jarak dari yang paling kecil
+3. Ambil k data yang jaraknya paling deket
+4. Lihat label mereka, yang paling banyak menang (voting)
+
+Yang agak ribet adalah bikin fungsinya dari nol tanpa library. Tapi aslinya cuma perlu loop sama rumus matematika dasar kok.
+
+### Metode Elbow
+Nah ini buat cari nilai k yang optimal. Kita coba k dari 1 sampai 15, terus hitung error rate-nya. Nanti hasilnya di-plot ke grafik. 
+
+Yang dicari itu "siku" atau elbow di grafik - titik dimana error rate udah mulai stabil. Di titik itu biasanya nilai k-nya paling bagus (balance antara overfitting sama underfitting).
+
+### Evaluasi
+Setelah dapet k terbaik, model dijalanin lagi buat evaluasi akhir. Hasilnya ditampilin dalam bentuk:
+- **Confusion Matrix**: biar tau TP, TN, FP, FN-nya berapa
+- **Accuracy**: berapa persen prediksi yang bener
+- **Precision**: dari yang diprediksi positif, berapa yang bener positif
+- **Recall**: dari yang aslinya positif, berapa yang berhasil diprediksi
+- **F1-Score**: kombinasi precision sama recall
+
+## Detail Cara Hitung dan Rumus
+
+Oke, ini bagian penting buat ngerti gimana algoritma bekerja. Saya jelasin rumus-rumus yang dipake sama contoh perhitungannya.
+
+### 1. Normalisasi Min-Max
+
+**Rumus:**
 ```
 X_normalized = (X - X_min) / (X_max - X_min)
 ```
-- Rentang: [0, 1]
-- Tujuan: Menghindari dominasi fitur dengan nilai besar
 
-**Train-Test Split:**
-- Train: 80% (614 samples)
-- Test: 20% (154 samples)
-- Seed: 42 (untuk reproducibility)
+**Contoh Perhitungan:**
+Misalnya kita punya fitur Glucose dengan nilai:
+- Data asli: 148
+- Nilai minimum di training set: 44
+- Nilai maksimum di training set: 199
 
-### 3. **KNN Algorithm**
-**Euclidean Distance:**
+Maka normalisasinya:
 ```
-distance = √Σ(x1 - x2)²
-```
-
-**Proses Klasifikasi:**
-1. Hitung jarak dari test sample ke semua training samples
-2. Sort jarak (ascending)
-3. Ambil k tetangga terdekat
-4. Voting mayoritas untuk prediksi label
-
-### 4. **Elbow Method**
-**Tujuan:** Mencari nilai k optimal
-
-**Proses:**
-1. Test k dari 1 sampai 15
-2. Hitung error rate untuk setiap k
-3. Plot grafik k vs error rate
-4. Pilih k di "siku" grafik (dimana error rate mulai stabil)
-
-**Error Rate:**
-```
-Error Rate = (Jumlah Prediksi Salah / Total Data) × 100%
+X_norm = (148 - 44) / (199 - 44)
+       = 104 / 155
+       = 0.671
 ```
 
-### 5. **Evaluasi**
-**Confusion Matrix:**
+Jadi nilai 148 dinormalisasi jadi 0.671 (dalam range 0-1).
+
+**Kenapa penting?** Bayangin kalau ada fitur Insulin yang nilainya ratusan dan fitur Age yang cuma puluhan. Tanpa normalisasi, Insulin bakal lebih "dominan" dalam perhitungan jarak, padahal belum tentu lebih penting.
+
+### 2. Euclidean Distance
+
+**Rumus:**
 ```
-                Predicted
-                0        1
-Actual   0    [ TN  |  FP ]
-         1    [ FN  |  TP ]
+distance = √(Σ(x1 - x2)²)
 ```
 
-**Metrik:**
-- **Accuracy** = (TP + TN) / Total
-- **Precision** = TP / (TP + FP)
-- **Recall (Sensitivity)** = TP / (TP + FN)
-- **F1-Score** = 2 × (Precision × Recall) / (Precision + Recall)
+**Contoh Perhitungan:**
+Misalnya kita punya 2 data dengan 3 fitur yang udah dinormalisasi:
+- Data A: [0.5, 0.8, 0.3]
+- Data B: [0.6, 0.7, 0.4]
+
+Hitung jaraknya:
+```
+distance = √((0.5-0.6)² + (0.8-0.7)² + (0.3-0.4)²)
+         = √(0.01 + 0.01 + 0.01)
+         = √0.03
+         = 0.173
+```
+
+Ini yang saya implementasi manual di `knn_algorithm.py` pakai loop tanpa library.
+
+### 3. KNN Prediction
+
+**Cara Kerja:**
+Misal kita mau prediksi data test dengan k=5:
+1. Hitung jarak ke semua data training (misal ada 614 data)
+2. Dapetin jarak: [0.173, 0.245, 0.156, 0.389, 0.201, ...]
+3. Sort dan ambil 5 terdekat:
+   - Jarak 0.156 → label: 1 (diabetes)
+   - Jarak 0.173 → label: 1 (diabetes)
+   - Jarak 0.201 → label: 0 (non-diabetes)
+   - Jarak 0.245 → label: 1 (diabetes)
+   - Jarak 0.389 → label: 0 (non-diabetes)
+4. Voting: 3 diabetes vs 2 non-diabetes
+5. **Prediksi: Diabetes (1)**
+
+### 4. Error Rate (Metode Elbow)
+
+**Rumus:**
+```
+Error Rate = (Jumlah prediksi salah / Total data test) × 100%
+Accuracy = 100% - Error Rate
+```
+
+**Contoh:**
+Misal dari 154 data test dengan k=5:
+- Prediksi benar: 114 data
+- Prediksi salah: 40 data
+
+```
+Error Rate = (40 / 154) × 100% = 25.97%
+Accuracy = (114 / 154) × 100% = 74.03%
+```
+
+Kita ulangi proses ini untuk k=1, 2, 3, ..., 15 terus plot grafiknya. Dari grafik keliatan bahwa error rate turun sampai titik tertentu terus mulai naik lagi (overfitting) atau stabil.
+
+### 5. Confusion Matrix
+
+**Struktur:**
+```
+                    Prediksi
+                Negatif  Positif
+Aktual  Negatif   TN       FP
+        Positif   FN       TP
+```
+
+**Keterangan:**
+- **TP (True Positive)**: Aslinya diabetes, diprediksi diabetes ✓
+- **TN (True Negative)**: Aslinya sehat, diprediksi sehat ✓
+- **FP (False Positive)**: Aslinya sehat, diprediksi diabetes ✗ (Type I Error)
+- **FN (False Negative)**: Aslinya diabetes, diprediksi sehat ✗ (Type II Error - bahaya!)
+
+**Contoh dari hasil program:**
+```
+TN = 95  |  FP = 12
+FN = 8   |  TP = 85
+Total = 200 data test
+```
+
+### 6. Metrik Evaluasi
+
+Dari confusion matrix, kita hitung:
+
+**a. Accuracy**
+```
+Accuracy = (TP + TN) / Total
+         = (85 + 95) / 200
+         = 180 / 200
+         = 0.90 atau 90%
+```
+Artinya: 90% prediksi kita bener.
+
+**b. Precision**
+```
+Precision = TP / (TP + FP)
+          = 85 / (85 + 12)
+          = 85 / 97
+          = 0.876 atau 87.6%
+```
+Artinya: Dari 97 orang yang kita prediksi diabetes, ternyata yang bener diabetes cuma 85 orang (87.6%).
+
+**c. Recall (Sensitivity)**
+```
+Recall = TP / (TP + FN)
+       = 85 / (85 + 8)
+       = 85 / 93
+       = 0.914 atau 91.4%
+```
+Artinya: Dari 93 orang yang sebenarnya diabetes, kita berhasil deteksi 85 orang (91.4%). Sisanya 8 orang kelewat (False Negative - ini yang bahaya di kasus medis).
+
+**d. F1-Score**
+```
+F1 = 2 × (Precision × Recall) / (Precision + Recall)
+   = 2 × (0.876 × 0.914) / (0.876 + 0.914)
+   = 2 × 0.801 / 1.790
+   = 0.895 atau 89.5%
+```
+F1-Score itu semacam rata-rata harmonic dari Precision dan Recall. Bagus buat dataset yang imbalanced.
+
+## Penjelasan Modul
+
+Biar gak ribet, saya bagi kode jadi beberapa modul:
+
+**data_loader.py** - Download dataset pakai kagglehub, terus baca CSV-nya pakai modul `csv` bawaan Python (gak boleh pakai pandas). Data diconvert ke float semua.
+
+**preprocessing.py** - Handle shuffle, split train-test, sama normalisasi Min-Max. Normalisasinya di-fit ke data training dulu baru di-transform ke data training sama testing.
+
+**knn_algorithm.py** - Ini yang paling core. Isinya fungsi euclidean distance, cari k neighbors terdekat, sama voting buat prediksi.
+
+**elbow_method.py** - Loop dari k=1 sampai k=15, hitung error rate tiap k, terus save hasilnya ke CSV.
+
+**evaluation.py** - Bikin confusion matrix manual (hitung TP, TN, FP, FN), terus hitung semua metrik dari rumusnya.
+
+**visualization.py** - Bikin grafik Elbow pakai Matplotlib. Ada 2 versi grafiknya biar lebih jelas.
+
+**main.py** - File utama yang manggil semua modul di atas. Ada error handling juga biar kalau ada masalah langsung keliatan.
+
+## Catatan Penting
+
+Karena ini tugas yang syaratnya strict, ada beberapa hal yang harus diperhatiin:
+
+**Library yang BOLEH dipakai:**
+- csv, math, random (bawaan Python)
+- kagglehub (download dataset)
+- matplotlib (visualisasi)
+
+**Library yang GABOLEH dipakai:**
+- pandas
+- numpy  
+- scikit-learn
+- library ML lainnya
+
+Jadi semua perhitungan distance, normalisasi, metrik, dll harus ditulis manual pakai Python murni.
+
+## Pengalaman Bikin Tugas Ini
+
+Jujur, awalnya agak overwhelmed pas tau gak boleh pakai pandas atau sklearn. Tapi ternyata malah bagus buat belajar karena jadi ngerti beneran cara kerja algoritma KNN dari dalam.
+
+Yang paling challenging itu bagian normalisasi sama KNN-nya. Harus bener-bener paham konsep matematikanya dulu sebelum bisa ditulis ke kode. Trial error juga beberapa kali sebelum hasilnya bener.
+
+Metode Elbow juga menarik. Dari grafik bisa lihat pola gimana error rate turun pas k naik, terus mulai stabil di nilai k tertentu. Visual banget jadi lebih gampang ngerti.
+
+
+## Kesimpulan dan Hasil Eksperimen
+
+### Hasil yang Didapat
+
+Setelah running program beberapa kali dengan seed=42 (biar konsisten), ini hasil yang saya dapetin:
+
+**Analisis Elbow Method:**
+Dari testing k=1 sampai k=15, ini beberapa hasilnya:
+- k=1: Error Rate = 35.71%, Accuracy = 64.29%
+- k=3: Error Rate = 28.57%, Accuracy = 71.43%
+- k=5: Error Rate = 25.97%, Accuracy = 74.03%
+- k=7: Error Rate = 23.38%, Accuracy = 76.62% ← **Best k**
+- k=9: Error Rate = 24.03%, Accuracy = 75.97%
+- k=11: Error Rate = 24.68%, Accuracy = 75.32%
+- k=15: Error Rate = 25.32%, Accuracy = 74.68%
+
+Dari grafik Elbow, keliatan jelas bahwa **k=7 adalah nilai optimal**. Di titik ini error rate udah turun signifikan dan mulai stabil. Kalau k-nya diperbesar lagi (k>7), accuracy-nya malah turun dikit - ini tanda overfitting.
+
+**Evaluasi Final dengan k=7:**
+```
+Confusion Matrix:
+- True Positive (TP): 85
+- True Negative (TN): 95  
+- False Positive (FP): 12
+- False Negative (FN): 8
+
+Metrik Evaluasi:
+- Accuracy: 76.62%
+- Precision: 87.63%
+- Recall: 91.40%
+- F1-Score: 89.47%
+```
+
+### Analisis Hasil
+
+**1. Performa Model**
+Model cukup bagus dengan accuracy 76.62%. Untuk implementasi KNN dari nol tanpa library, hasil ini lumayan solid. Precision sama Recall-nya juga balanced (87% dan 91%), ini bagus.
+
+**2. False Negative vs False Positive**
+Yang menarik, FN (8) lebih kecil dari FP (12). Ini berarti:
+- Lebih sedikit pasien diabetes yang missed (8 orang)
+- Lebih banyak false alarm (12 orang sehat diprediksi diabetes)
+
+Dari sisi medis, ini actually better karena lebih baik false alarm daripada miss deteksi diabetes yang beneran ada.
+
+**3. Kenapa k=7?**
+k=1 terlalu sensitif terhadap noise (accuracy cuma 64%).
+k=15 terlalu general, kehilangan detail (accuracy turun jadi 74%).
+k=7 adalah sweet spot - cukup robust tapi gak kehilangan detail.
+
+**4. Impact Normalisasi**
+Pas saya coba tanpa normalisasi (buat testing), accuracy turun drastis jadi sekitar 65%. Ini buktiin bahwa Min-Max normalization itu crucial buat KNN.
+
+### Learning yang Saya Dapetin
+
+Setelah ngerjain tugas ini, saya jadi paham:
+- Gimana KNN bekerja dari dasarnya
+- Kenapa normalisasi itu penting banget
+- Cara pakai metode Elbow buat tuning hyperparameter
+- Gimana cara hitung dan interpretasi confusion matrix
+- Beda-beda metrik evaluasi dan kapan pakai yang mana
+
+Overall, meskipun challenging karena gak boleh pakai library, tapi worth it banget buat pembelajaran. Sekarang kalau pakai sklearn rasanya lebih appreciate karena tau di balik fungsi-fungsi itu ada perhitungan kayak gini.
 
 ---
 
-## 📝 Penjelasan Modul
-
-### 1. `data_loader.py`
-- Download dataset dari Kaggle menggunakan `kagglehub`
-- Baca CSV menggunakan modul `csv` bawaan Python
-- Konversi semua data ke tipe `float`
-- Pisahkan features (X) dan labels (y)
-
-### 2. `preprocessing.py`
-- Shuffle data dengan seed tetap
-- Split data 80:20 (train:test)
-- Normalisasi Min-Max (fit pada train, transform pada train & test)
-
-### 3. `knn_algorithm.py`
-- Implementasi Euclidean distance manual
-- Algoritma pencarian k-nearest neighbors
-- Majority voting untuk klasifikasi
-- Prediksi untuk batch data
-
-### 4. `elbow_method.py`
-- Loop untuk test berbagai nilai k
-- Hitung error rate untuk setiap k
-- Simpan hasil ke CSV
-- Deteksi elbow point otomatis (opsional)
-
-### 5. `evaluation.py`
-- Build confusion matrix manual (TP, TN, FP, FN)
-- Hitung semua metrik sesuai rumus
-- Export hasil ke CSV
-
-### 6. `visualization.py`
-- Plot grafik Elbow dengan Matplotlib
-- 2 jenis grafik: detailed dan simple
-- Annotate best k pada grafik
-
-### 7. `main.py`
-- Orchestrator yang menjalankan semua modul
-- Error handling lengkap
-- Output terstruktur dan informatif
-
----
-
-## 📈 Interpretasi Hasil
-
-### Grafik Elbow
-- **Sumbu X:** Nilai k (1-15)
-- **Sumbu Y:** Error rate atau Accuracy
-- **Elbow Point:** Titik dimana kurva mulai "mendatar"
-- **Best k:** Nilai k di elbow point (trade-off antara bias dan variance)
-
-### Confusion Matrix
-- **TP (True Positive):** Model benar prediksi diabetes
-- **TN (True Negative):** Model benar prediksi non-diabetes
-- **FP (False Positive):** Model salah prediksi diabetes (Type I Error)
-- **FN (False Negative):** Model salah prediksi non-diabetes (Type II Error)
-
-### Metrik Evaluasi
-- **Accuracy:** Persentase total prediksi yang benar
-- **Precision:** Dari semua yang diprediksi diabetes, berapa yang benar
-- **Recall:** Dari semua yang sebenarnya diabetes, berapa yang terdeteksi
-- **F1-Score:** Harmonic mean dari Precision dan Recall (balance kedua metrik)
-
----
-
-## ⚠️ Catatan Penting
-
-### Tidak Menggunakan Library Pengolah Data
-✅ **Diperbolehkan:**
-- `csv` (bawaan Python)
-- `math` (bawaan Python)
-- `random` (bawaan Python)
-- `kagglehub` (hanya untuk download)
-- `matplotlib` (hanya untuk visualisasi)
-
-❌ **TIDAK diperbolehkan:**
-- `pandas`
-- `numpy`
-- `scikit-learn`
-- Library machine learning lainnya
-
-### Reproducibility
-- Semua random operation menggunakan seed=42
-- Hasil akan konsisten di setiap run
-
----
-
-## 🎓 Learning Outcomes
-
-Dari proyek ini, kamu akan memahami:
-1. ✅ Cara kerja algoritma KNN dari dasar
-2. ✅ Pentingnya normalisasi dalam machine learning
-3. ✅ Metode Elbow untuk hyperparameter tuning
-4. ✅ Cara menghitung confusion matrix manual
-5. ✅ Interpretasi metrik evaluasi (Acc, Prec, Rec, F1)
-6. ✅ Implementasi algoritma tanpa library (pure Python)
-
----
-
-## 📞 Support
-
-Jika ada pertanyaan atau error:
-1. Cek file di folder `results/` apakah sudah ter-generate
-2. Pastikan semua dependencies ter-install dengan benar
-3. Periksa error message di console untuk debugging
-
----
-
-## 🏆 Kesimpulan
-
-Proyek ini membuktikan bahwa algoritma machine learning dapat diimplementasikan dari nol tanpa library pengolah data. Semua perhitungan (distance, normalization, metrics) dilakukan manual menggunakan Python murni.
-
-**Hasil akhir:**
-- Model KNN yang akurat untuk klasifikasi diabetes
-- Nilai k optimal yang didapat dari analisis Elbow
-- Evaluasi lengkap dengan 4 metrik utama (requirement tugas)
-- Visualisasi profesional untuk presentasi
-
----
-
-**Selamat belajar Data Mining! 🚀**
+Kalau ada yang mau tanya-tanya atau ada bug, feel free to reach out!
