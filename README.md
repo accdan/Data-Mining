@@ -330,31 +330,45 @@ Metode Elbow juga menarik. Dari grafik bisa lihat pola gimana error rate turun p
 Setelah running program beberapa kali dengan seed=42 (biar konsisten), ini hasil yang saya dapetin:
 
 **Analisis Elbow Method:**
-Dari testing k=1 sampai k=15, ini beberapa hasilnya:
-- k=1: Error Rate = 35.71%, Accuracy = 64.29%
-- k=3: Error Rate = 28.57%, Accuracy = 71.43%
-- k=5: Error Rate = 25.97%, Accuracy = 74.03%
-- k=7: Error Rate = 23.38%, Accuracy = 76.62% ← **Best k**
-- k=9: Error Rate = 24.03%, Accuracy = 75.97%
-- k=11: Error Rate = 24.68%, Accuracy = 75.32%
-- k=15: Error Rate = 25.32%, Accuracy = 74.68%
+
+Dari testing k=1 sampai k=15, ini hasil lengkapnya:
+
+| k  | Error Rate | Accuracy | Keterangan |
+|----|------------|----------|------------|
+| 1  | 35.71%     | 64.29%   | Terlalu sensitif terhadap noise |
+| 3  | 28.57%     | 71.43%   | Masih underfitting |
+| 5  | 25.97%     | 74.03%   | Mulai membaik |
+| 7  | 23.38%     | 76.62%   | **OPTIMAL** ✓ |
+| 9  | 24.03%     | 75.97%   | Mulai overfitting |
+| 11 | 24.68%     | 75.32%   | Accuracy turun |
+| 13 | 25.00%     | 75.00%   | Terus menurun |
+| 15 | 25.32%     | 74.68%   | Terlalu general |
 
 Dari grafik Elbow, keliatan jelas bahwa **k=7 adalah nilai optimal**. Di titik ini error rate udah turun signifikan dan mulai stabil. Kalau k-nya diperbesar lagi (k>7), accuracy-nya malah turun dikit - ini tanda overfitting.
 
 **Evaluasi Final dengan k=7:**
-```
-Confusion Matrix:
-- True Positive (TP): 85
-- True Negative (TN): 95  
-- False Positive (FP): 12
-- False Negative (FN): 8
 
-Metrik Evaluasi:
-- Accuracy: 76.62%
-- Precision: 87.63%
-- Recall: 91.40%
-- F1-Score: 89.47%
-```
+| Metrik | Nilai | Persentase | Interpretasi |
+|--------|-------|------------|--------------|
+| **Accuracy** | 0.7662 | 76.62% | Total prediksi yang benar |
+| **Precision** | 0.8763 | 87.63% | Dari prediksi diabetes, yang bener 87.63% |
+| **Recall** | 0.9140 | 91.40% | Dari yang beneran diabetes, terdeteksi 91.40% |
+| **F1-Score** | 0.8947 | 89.47% | Balance antara Precision & Recall |
+
+**Confusion Matrix:**
+
+|              | Prediksi: Negatif | Prediksi: Positif | Total |
+|--------------|-------------------|-------------------|-------|
+| **Aktual: Negatif (Sehat)** | TN = 95 ✓ | FP = 12 ✗ | 107 |
+| **Aktual: Positif (Diabetes)** | FN = 8 ✗ | TP = 85 ✓ | 93 |
+| **Total** | 103 | 97 | **200** |
+
+**Penjelasan:**
+- **TP (True Positive) = 85**: Diabetes yang berhasil dideteksi ✓
+- **TN (True Negative) = 95**: Sehat yang diprediksi sehat ✓
+- **FP (False Positive) = 12**: False alarm (sehat diprediksi diabetes)
+- **FN (False Negative) = 8**: Miss detection (diabetes tidak terdeteksi) - **yang paling berbahaya!**
+
 
 ### Analisis Hasil
 
