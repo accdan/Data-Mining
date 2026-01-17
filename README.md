@@ -76,6 +76,29 @@ Ada 2 versi grafik: yang lengkap (ada error rate sama accuracy) sama yang simple
 ### Data yang Dipakai
 Dataset Pima Indians Diabetes dari Kaggle. Totalnya ada 768 data dengan 8 fitur kayak Glucose, BloodPressure, BMI, dll. Target-nya adalah apakah diabetes (1) atau tidak (0).
 
+**Penjelasan Fitur:**
+- **Pregnancies**: Jumlah kehamilan
+- **Glucose**: Konsentrasi glukosa plasma (mg/dL)
+- **BloodPressure**: Tekanan darah diastolik (mm Hg)
+- **SkinThickness**: Ketebalan lipatan kulit trisep (mm)
+- **Insulin**: Insulin serum 2 jam (mu U/ml)
+- **BMI**: Body Mass Index (berat dalam kg / tinggi dalam m²)
+- **DiabetesPedigreeFunction**: Fungsi silsilah keluarga diabetes
+- **Age**: Umur (tahun)
+- **Outcome**: Target (0 = Tidak Diabetes, 1 = Diabetes)
+
+**Contoh Data (5 baris pertama):**
+
+| No | Pregnancies | Glucose | BloodPressure | SkinThickness | Insulin | BMI  | DiabetesPedigreeFunction | Age | Outcome |
+|----|-------------|---------|---------------|---------------|---------|------|--------------------------|-----|---------|
+| 1  | 6           | 148     | 72            | 35            | 0       | 33.6 | 0.627                    | 50  | 1       |
+| 2  | 1           | 85      | 66            | 29            | 0       | 26.6 | 0.351                    | 31  | 0       |
+| 3  | 8           | 183     | 64            | 0             | 0       | 23.3 | 0.672                    | 32  | 1       |
+| 4  | 1           | 89      | 66            | 23            | 94      | 28.1 | 0.167                    | 21  | 0       |
+| 5  | 0           | 137     | 40            | 35            | 168     | 43.1 | 2.288                    | 33  | 1       |
+
+Bisa dilihat dari tabel di atas, ada beberapa nilai 0 yang sebenarnya missing value (misalnya Insulin=0 atau SkinThickness=0). Tapi dalam tugas ini saya pake data as-is tanpa handling missing value, fokusnya ke implementasi KNN-nya aja.
+
 ### Preprocessing
 Sebelum masuk ke algoritma, datanya harus di-preprocessing dulu:
 - Shuffle data biar acak (pakai seed=42 biar hasilnya konsisten)
